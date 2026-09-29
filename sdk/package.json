@@ -1,0 +1,28 @@
+{
+  "name": "@consentbridge/consent-widget",
+  "version": "1.1.0",
+  "description": "ConsentBridge (Finverge's DPDP Compliance Platform) embeddable consent widget — single dependency-free file, no build step required.",
+  "main": "dpdp-consent-widget.js",
+  "types": "dpdp-consent-widget.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dpdp-consent-widget.d.ts",
+      "default": "./dpdp-consent-widget.js"
+    },
+    "./register": "./dpdp-consent-widget.js"
+  },
+  "files": [
+    "dpdp-consent-widget.js",
+    "dpdp-consent-widget.d.ts",
+    "README.md"
+  ],
+  "keywords": ["dpdp", "consent", "privacy", "compliance", "india", "gdpr-style", "consent-management"],
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "directory",
+    "url": "D:/Finverge/Docs/Products/DPDP/sdk"
+  }
+}

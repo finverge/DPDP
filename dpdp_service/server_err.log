@@ -1,0 +1,24 @@
+INFO:     Started server process [17980]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8110 (Press CTRL+C to quit)
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch RSS source RBI Notifications (RSS) (https://www.rbi.org.in/notifications_rss.xml) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch RSS source RBI Notifications (RSS) (https://www.rbi.org.in/notifications_rss.xml) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: The read operation timed out
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch RSS source RBI Notifications (RSS) (https://www.rbi.org.in/notifications_rss.xml) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch RSS source RBI Notifications (RSS) (https://www.rbi.org.in/notifications_rss.xml) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch RSS source RBI Notifications (RSS) (https://www.rbi.org.in/notifications_rss.xml) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: The read operation timed out
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch RSS source RBI Notifications (RSS) (https://www.rbi.org.in/notifications_rss.xml) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: The read operation timed out
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: The read operation timed out
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch RSS source RBI Notifications (RSS) (https://www.rbi.org.in/notifications_rss.xml) failed to fetch: [Errno 11001] getaddrinfo failed
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)
+Regulatory watch source IRDAI Circulars (https://irdai.gov.in/circulars) failed to fetch: The read operation timed out

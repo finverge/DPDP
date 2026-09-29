@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  No permissions declared here on purpose: the widget's network calls
+  happen inside the WebView via fetch(), which only needs the standard
+  android.permission.INTERNET your app already declares for any network
+  use — this library doesn't add a second, redundant declaration.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" />

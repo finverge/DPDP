@@ -1,0 +1,44 @@
+{
+  "name": "@consentbridge/react",
+  "version": "1.0.0",
+  "description": "React wrapper for the ConsentBridge (Finverge's DPDP Compliance Platform) consent widget.",
+  "type": "module",
+  "main": "dist/ConsentWidget.js",
+  "types": "dist/ConsentWidget.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/ConsentWidget.d.ts",
+      "default": "./dist/ConsentWidget.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@consentbridge/consent-widget": "^1.1.0",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@consentbridge/consent-widget": "file:..",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "typescript": "^5.6.0"
+  },
+  "keywords": ["dpdp", "consent", "privacy", "compliance", "india", "react"],
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "directory",
+    "url": "D:/Finverge/Docs/Products/DPDP/sdk/react"
+  }
+}
