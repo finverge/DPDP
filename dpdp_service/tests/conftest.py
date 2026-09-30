@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT))
 
 _TEST_DB = ROOT / "tests" / "_test.db"
 os.environ["DPDP_DATABASE_URL"] = f"sqlite:///{_TEST_DB}"
+os.environ["DPDP_INTERNAL_API_KEY"] = "test-internal-key"
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
@@ -53,9 +54,10 @@ def auth_headers(client):
 
     def _make(tenant_id: str | None, role: str = "tenant_admin", email: str | None = None):
         email = email or f"test-user-{next(counter)}@example.com"
+        headers = {"X-Internal-Key": "test-internal-key"} if role == "platform_admin" else {}
         client.post("/auth/register", json={
             "tenant_id": tenant_id, "email": email, "password": "test-password-123", "role": role,
-        })
+        }, headers=headers)
         token = client.post("/auth/login", json={
             "tenant_id": tenant_id, "email": email, "password": "test-password-123",
         }).json()["access_token"]

@@ -66,9 +66,36 @@ def test_me_without_token_is_401(client):
 
 
 def test_platform_admin_has_no_tenant_id(client):
-    resp = client.post("/auth/register", json={"email": "platform@finverge.example", "password": "password123", "role": "platform_admin"})
+    resp = client.post(
+        "/auth/register", json={"email": "platform@finverge.example", "password": "password123", "role": "platform_admin"},
+        headers={"X-Internal-Key": "test-internal-key"},
+    )
     assert resp.status_code == 200
     assert resp.json()["tenant_id"] is None
+
+
+def test_platform_admin_registration_without_internal_key_is_401(client):
+    resp = client.post("/auth/register", json={"email": "no-key@finverge.example", "password": "password123", "role": "platform_admin"})
+    assert resp.status_code == 401
+
+
+def test_platform_admin_registration_with_wrong_internal_key_is_401(client):
+    resp = client.post(
+        "/auth/register", json={"email": "wrong-key@finverge.example", "password": "password123", "role": "platform_admin"},
+        headers={"X-Internal-Key": "not-the-real-key"},
+    )
+    assert resp.status_code == 401
+
+
+def test_tenant_scoped_roles_never_need_an_internal_key(client):
+    """The gate is specific to platform_admin — every other role must keep
+    registering exactly as before, with no header at all, since that's the
+    self-service tenant-bootstrap path this endpoint has to stay open for."""
+    for role in ("tenant_admin", "dpo", "compliance_officer"):
+        resp = client.post("/auth/register", json={
+            "tenant_id": f"no-key-needed-{role}", "email": f"{role}@x.com", "password": "password123", "role": role,
+        })
+        assert resp.status_code == 200, (role, resp.text)
 
 
 def test_non_platform_admin_requires_tenant_id(client):

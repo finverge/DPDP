@@ -24,6 +24,13 @@ JWT_SECRET = os.environ.get("DPDP_JWT_SECRET", "dev-only-insecure-secret-change-
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRE_MINUTES = int(os.environ.get("DPDP_JWT_EXPIRE_MINUTES", "480"))
 
+# Gates POST /auth/register for role=platform_admin only (routes_auth.py) — same
+# X-Internal-Key precedent as Fraud360's cp_common.auth.require_internal_key,
+# copied rather than made a shared dependency for the same standalone-service
+# reason this whole module gives. Same dev-only-default caveat as JWT_SECRET
+# above: MUST be overridden via DPDP_INTERNAL_API_KEY in any shared environment.
+INTERNAL_API_KEY = os.environ.get("DPDP_INTERNAL_API_KEY", "dev-only-insecure-internal-key-change-me")
+
 
 def hash_password(plain: str) -> str:
     return bcrypt.hashpw(plain.encode(), bcrypt.gensalt()).decode()

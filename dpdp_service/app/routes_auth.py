@@ -8,7 +8,7 @@ decision, not an oversight (see FSD "not yet built").
 """
 from datetime import datetime, timedelta, timezone
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -16,7 +16,7 @@ from app.auth import Principal, ROLES, get_current_principal
 from app.db import get_session
 from app.models import User
 from app.schemas import UserRegisterIn, UserOut, LoginIn, TokenOut
-from app.security import hash_password, verify_password, create_access_token
+from app.security import hash_password, verify_password, create_access_token, INTERNAL_API_KEY
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -39,16 +39,30 @@ def _aware(dt: datetime | None) -> datetime | None:
 
 
 @router.post("/register", response_model=UserOut)
-def register(req: UserRegisterIn, db: Session = Depends(get_session)):
-    """No auth guard on this endpoint by design for v1 — the very first
-    tenant_admin for a brand-new tenant has no token yet to present.
-    Real deployments will want this gated behind an invite flow or an
-    internal key (Fraud360's require_internal_key is the precedent);
-    tracked as a hardening follow-up, not hidden."""
+def register(
+    req: UserRegisterIn, db: Session = Depends(get_session),
+    x_internal_key: str | None = Header(default=None),
+):
+    """Open by design for every tenant-scoped role — the very first
+    tenant_admin for a brand-new tenant has no token yet to present, so
+    that call has to be unauthenticated. role=platform_admin is different:
+    it's a Finverge-staff account with cross-tenant reach, not a tenant
+    bootstrapping itself, so it doesn't get the same open door. Gated
+    behind X-Internal-Key (app/security.py's INTERNAL_API_KEY) instead —
+    same precedent and header name as Fraud360's cp_common.auth.
+    require_internal_key, applied here per-role inside the handler rather
+    than as a route-wide FastAPI dependency, since every other role must
+    still register with no key at all. Previously this endpoint accepted
+    role=platform_admin from anyone who could reach it, at any time, not
+    just during initial setup — see the Admin Portal Deployment Guide
+    Sec. 4.4/8 for why that mattered; closing it here supersedes the
+    reverse-proxy-level mitigation that guide recommended as a stopgap."""
     if req.role not in ROLES:
         raise HTTPException(status_code=422, detail=f"Unknown role '{req.role}' — expected one of {ROLES}.")
     if req.role != "platform_admin" and not req.tenant_id:
         raise HTTPException(status_code=422, detail="tenant_id is required for every role except platform_admin.")
+    if req.role == "platform_admin" and x_internal_key != INTERNAL_API_KEY:
+        raise HTTPException(status_code=401, detail="Registering a platform_admin requires a valid X-Internal-Key header.")
 
     existing = db.execute(
         select(User).where(User.tenant_id == req.tenant_id, User.email == req.email)
